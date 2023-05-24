@@ -1,0 +1,111 @@
+<form method="POST">
+  {% csrf_token %}
+   <h3>Form Details</h3>
+
+  <label for="name">Name:</label><br>
+  <input type="text" id="name" name="name"><br><br>
+
+  <label for="dob">DOB:</label><br>
+  <input type="date" id="dob" name="dob"><br><br>
+
+  <label for="age">Age:</label><br>
+  <input type="number" id="age" name="age"><br><br>
+
+  <label for="gender">Gender:</label><br>
+  <select id="gender" name="gender">
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+    <option value="other">Other</option>
+  </select><br><br>
+
+  <label for="phone">Phone Number:</label><br>
+  <input type="tel" id="phone" name="phone"><br><br>
+
+  <label for="email">Email:</label><br>
+  <input type="email" id="email" name="email"><br><br>
+
+  <label for="address">Address:</label><br>
+  <textarea id="address" name="address"></textarea><br><br>
+
+  <label for="department">Department:</label><br>
+  <select id="department" name="department">
+    <option value="">Select Department</option>
+    <option value="Computer Science">Computer Science</option>
+    <option value="commerce">Commerce</option>
+    <option value="Political Science">Political Science</option>
+    <option value="History">History</option>
+    <option value="Geography">Geography</option>
+
+  </select>
+
+  <label style="margin-left:20px" for="courses">Courses:</label>
+  <select id="courses" name="courses">
+    <option value="">Select Course</option>
+  </select><br><br>
+
+  <label for="purpose">Purpose:</label><br>
+  <select id="purpose" name="purpose">
+    <option value="">Select Purpose</option>
+    <option value="enquiry">Enquiry</option>
+    <option value="place order">Place Order</option>
+    <option value="return">Return</option>
+  </select><br><br>
+
+    <h3 >Materials Provided </h3>
+
+  <label class="form-check-label" >
+    Notebook
+  </label>
+    <input class="form-check-input" type="checkbox" value="" ><br><br>
+
+  <label class="form-check-label" >
+    Pen
+  </label>
+    <input class="form-check-input" type="checkbox" value="" ><br><br>
+
+  <label class="form-check-label">
+    Exam sheets
+  </label>
+     <input class="form-check-input" type="checkbox" value="" ><br><br>
+
+
+  <input type="submit" value="Submit"><br>
+</form>
+{% if messages %}
+  <span class="messages">
+    {% for message in messages %}
+      <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </span>
+{% endif %}
+
+<a href="{% url 'home' %}" class="btn">Go to Home</a>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  $(document).ready(function() {
+    // Department options and their corresponding courses
+    var departmentOptions = {
+    'Computer Science':['BCA','MCA'],
+      'commerce': ['BBA', 'BCom'],
+      'Political Science': ['BSc','MSc'],
+      'History': ['BA','MA'],
+      'Geography':['BA','MA']
+    };
+
+    // Update the courses dropdown based on the selected department
+    $('#department').change(function() {
+
+      var selectedDepartment = $(this).val();
+      console.log(selectedDepartment)
+      var courses = departmentOptions[selectedDepartment];
+      var coursesDropdown = $('#courses');
+      coursesDropdown.empty();
+      coursesDropdown.append($('<option value="">Select Course</option>'));
+      $.each(courses, function(index, course) {
+        coursesDropdown.append($('<option></option>').text(course));
+      });
+    });
+  });
+</script>
